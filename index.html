@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Carteira de Empréstimo</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+#carteira{
+    background:#fff;
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.barra-fundo{
+    background:#ddd;
+    height:30px;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+#barra{
+    background:#4CAF50;
+    height:100%;
+    width:0%;
+    transition:0.5s;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#4CAF50;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+li{
+    margin-bottom:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Carteira de Empréstimo</h1>
+
+<div id="carteira">
+
+    <h2 id="nome"></h2>
+
+    <p>
+        <strong>Valor emprestado:</strong>
+        <span id="emprestado"></span>
+    </p>
+
+    <p>
+        <strong>Total pago:</strong>
+        <span id="pago"></span>
+    </p>
+
+    <p>
+        <strong>Saldo devedor:</strong>
+        <span id="saldo"></span>
+    </p>
+
+    <h3>Progresso da quitação</h3>
+
+    <div class="barra-fundo">
+        <div id="barra"></div>
+    </div>
+
+    <p>
+        <strong>
+            <span id="percentual"></span>% quitado
+        </strong>
+    </p>
+
+    <h3>Histórico de Pagamentos</h3>
+
+    <ul id="historico"></ul>
+
+    <button onclick="registrarPagamento()">
+        Registrar Pagamento
+    </button>
+
+</div>
+
+<script>
+
+const nome = "Cliente Teste";
+
+const emprestado = 5000;
+
+const pagamentos = [
+    {
+        data: "01/06/2026",
+        valor: 1000,
+        forma: "PIX"
+    },
+    {
+        data: "10/06/2026",
+        valor: 500,
+        forma: "Dinheiro"
+    }
+];
+
+function atualizarTela(){
+
+    let pago = pagamentos.reduce(
+        (total,item) => total + item.valor,
+        0
+    );
+
+    let saldo = emprestado - pago;
+
+    let percentual =
+        (pago / emprestado) * 100;
+
+    document.getElementById("nome").innerText =
+        nome;
+
+    document.getElementById("emprestado").innerText =
+        "R$ " + emprestado.toLocaleString("pt-BR");
+
+    document.getElementById("pago").innerText =
+        "R$ " + pago.toLocaleString("pt-BR");
+
+    document.getElementById("saldo").innerText =
+        "R$ " + saldo.toLocaleString("pt-BR");
+
+    document.getElementById("percentual").innerText =
+        percentual.toFixed(0);
+
+    document.getElementById("barra").style.width =
+        percentual + "%";
+
+    const historico =
+        document.getElementById("historico");
+
+    historico.innerHTML = "";
+
+    pagamentos.forEach(item => {
+
+        const li =
+            document.createElement("li");
+
+        li.innerText =
+            item.data +
+            " - R$ " +
+            item.valor.toLocaleString("pt-BR") +
+            " (" + item.forma + ")";
+
+        historico.appendChild(li);
+
+    });
+
+}
+
+function registrarPagamento(){
+
+    let valor =
+        prompt("Valor recebido:");
+
+    if(!valor) return;
+
+    valor =
+        Number(valor.replace(",", "."));
+
+    if(isNaN(valor)) return;
+
+    let forma =
+        prompt("Forma de pagamento (PIX ou Dinheiro)");
+
+    if(!forma){
+        forma = "Não informado";
+    }
+
+    const hoje =
+        new Date().toLocaleDateString("pt-BR");
+
+    pagamentos.push({
+        data: hoje,
+        valor: valor,
+        forma: forma
+    });
+
+    atualizarTela();
+
+}
+
+atualizarTela();
+
+</script>
+
+</body>
+</html>
