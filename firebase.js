@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
 import {
@@ -17,37 +16,36 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 async function testarFirestore() {
 
   try {
 
-    const ref = doc(
+    const docRef = doc(
       db,
       "clientes",
       "cliente-teste"
     );
 
-    const snap = await getDoc(ref);
+    const docSnap = await getDoc(docRef);
 
-    if (snap.exists()) {
+    if (docSnap.exists()) {
 
-      console.log(
-        "Documento encontrado:",
-        snap.data()
-      );
+      const dados = docSnap.data();
 
       alert(
-        "Firestore conectado com sucesso!"
+        "Conectado!\n\n" +
+        "Emprestado: " + dados.emprestado +
+        "\nPago: " + dados.pago +
+        "\nSaldo: " + dados.saldo
       );
+
+      console.log(dados);
 
     } else {
 
-      alert(
-        "Documento cliente-teste não encontrado."
-      );
+      alert("Documento cliente-teste não encontrado.");
 
     }
 
@@ -56,7 +54,8 @@ async function testarFirestore() {
     console.error(erro);
 
     alert(
-      "Erro ao conectar Firestore."
+      "Erro ao conectar ao Firestore.\n\n" +
+      erro.message
     );
 
   }
