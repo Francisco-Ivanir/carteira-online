@@ -16,7 +16,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-alert("VERSAO NOVA");
 
 const db = getFirestore(app);
 
@@ -36,12 +35,28 @@ async function testarFirestore() {
 
       const dados = docSnap.data();
 
-      alert(
-  "Cliente: " + dados.nome +
-  "\n\nEmprestado: " + dados.emprestado +
-  "\nPago: " + dados.pago +
-  "\nSaldo: " + dados.saldo
-);
+    document.getElementById("nome").innerText =
+  dados.nome;
+
+document.getElementById("emprestado").innerText =
+  "R$ " + dados.emprestado.toLocaleString("pt-BR");
+
+document.getElementById("pago").innerText =
+  "R$ " + dados.pago.toLocaleString("pt-BR");
+
+document.getElementById("saldo").innerText =
+  "R$ " + dados.saldo.toLocaleString("pt-BR");
+
+const percentual =
+  (dados.pago / dados.emprestado) * 100;
+
+document.getElementById("percentual").innerText =
+  percentual.toFixed(0);
+
+document.getElementById("barra").style.width =
+  percentual + "%";
+
+alert("Dados carregados do Firebase!");
 
       console.log(dados);
 
