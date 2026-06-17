@@ -35,11 +35,11 @@ async function testarFirestore() {
       const dados = docSnap.data();
 
       alert(
-        "Conectado!\n\n" +
-        "Emprestado: " + dados.emprestado +
-        "\nPago: " + dados.pago +
-        "\nSaldo: " + dados.saldo
-      );
+  "Cliente: " + dados.nome +
+  "\n\nEmprestado: " + dados.emprestado +
+  "\nPago: " + dados.pago +
+  "\nSaldo: " + dados.saldo
+);
 
       console.log(dados);
 
