@@ -16,6 +16,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+alert("VERSAO NOVA");
+
 const db = getFirestore(app);
 
 async function testarFirestore() {
