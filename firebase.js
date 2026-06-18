@@ -99,8 +99,8 @@ console.log(dados);
 const pagamentosSnap =
   await getDocs(pagamentosRef);
 
-console.log(
-  "Quantidade de pagamentos:",
+alert(
+  "Pagamentos encontrados: " +
   pagamentosSnap.size
 );
 alert("Dados carregados do Firebase!");
