@@ -87,7 +87,8 @@ document.getElementById("percentual").innerText =
 
 document.getElementById("barra").style.width =
   percentual + "%";
-
+      
+console.log(dados);
       const pagamentosRef = collection(
   db,
   "clientes",
@@ -103,8 +104,6 @@ console.log(
   pagamentosSnap.size
 );
 alert("Dados carregados do Firebase!");
-
-      console.log(dados);
 
     } else {
 
