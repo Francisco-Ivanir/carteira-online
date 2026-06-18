@@ -36,7 +36,37 @@ async function testarFirestore() {
     if (docSnap.exists()) {
 
       const dados = docSnap.data();
+const historico =
+  document.getElementById("historico");
 
+historico.innerHTML = "";
+
+const pagamentosRef = collection(
+  db,
+  "clientes",
+  "cliente-teste",
+  "pagamentos"
+);
+
+const pagamentosSnap =
+  await getDocs(pagamentosRef);
+
+pagamentosSnap.forEach((pagamento) => {
+
+  const item = pagamento.data();
+
+  const li =
+    document.createElement("li");
+
+  li.innerText =
+    item.data +
+    " - R$ " +
+    item.valor.toLocaleString("pt-BR") +
+    " (" + item.forma + ")";
+
+  historico.appendChild(li);
+
+});
     document.getElementById("nome").innerText =
   dados.nome;
 
