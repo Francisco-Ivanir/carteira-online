@@ -113,12 +113,12 @@ alert("Dados carregados do Firebase!");
 
   } catch (erro) {
 
-    console.error(erro);
-
     alert(
-      "Erro ao conectar ao Firestore.\n\n" +
-      erro.message
-    );
+  "ERRO:\n\n" +
+  erro.message
+);
+
+console.error(erro);
 
   }
 
