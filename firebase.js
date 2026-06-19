@@ -106,7 +106,59 @@ document.getElementById("barra").style.width =
 console.error(erro);
 
   }
+async function registrarPagamentoFirebase() {
 
+  try {
+
+    const valorTexto =
+      prompt("Valor recebido:");
+
+    if (!valorTexto) return;
+
+    const valor =
+      Number(valorTexto.replace(",", "."));
+
+    if (isNaN(valor)) return;
+
+    let forma =
+      prompt("Forma de pagamento (PIX ou Dinheiro)");
+
+    if (!forma) {
+      forma = "Não informado";
+    }
+
+    const hoje =
+      new Date().toLocaleDateString("pt-BR");
+
+    await addDoc(
+
+      collection(
+        db,
+        "clientes",
+        "cliente-teste",
+        "pagamentos"
+      ),
+
+      {
+        data: hoje,
+        valor: valor,
+        forma: forma
+      }
+
+    );
+
+    alert("Pagamento salvo no Firebase!");
+
+  } catch (erro) {
+
+    alert(
+      "Erro ao salvar pagamento:\n\n" +
+      erro.message
+    );
+
+  }
+
+}
 }
 
 testarFirestore();
