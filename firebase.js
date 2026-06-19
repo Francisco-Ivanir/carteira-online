@@ -7,7 +7,8 @@ import {
   collection,
   getDocs,
   addDoc,
-  updateDoc
+  updateDoc,
+  increment
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
