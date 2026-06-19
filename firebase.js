@@ -159,6 +159,8 @@ async function registrarPagamentoFirebase() {
   }
 
 }
+  window.registrarPagamentoFirebase =
+  registrarPagamentoFirebase;
 }
 
 testarFirestore();
