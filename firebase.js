@@ -148,7 +148,25 @@ async function registrarPagamentoFirebase() {
 
     );
 
-    alert("Pagamento salvo no Firebase!");
+    const clienteRef = doc(
+      db,
+      "clientes",
+      "cliente-teste"
+    );
+
+    await updateDoc(
+      clienteRef,
+      {
+        pago: increment(valor),
+        saldo: increment(-valor)
+      }
+    );
+
+    alert(
+      "Pagamento registrado com sucesso!"
+    );
+
+    location.reload();
 
   } catch (erro) {
 
