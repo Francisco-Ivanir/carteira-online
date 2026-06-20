@@ -170,37 +170,7 @@ function atualizarTela(){
 
 }
 
-function registrarPagamento(){
 
-    let valor =
-        prompt("Valor recebido:");
-
-    if(!valor) return;
-
-    valor =
-        Number(valor.replace(",", "."));
-
-    if(isNaN(valor)) return;
-
-    let forma =
-        prompt("Forma de pagamento (PIX ou Dinheiro)");
-
-    if(!forma){
-        forma = "Não informado";
-    }
-
-    const hoje =
-        new Date().toLocaleDateString("pt-BR");
-
-    pagamentos.push({
-        data: hoje,
-        valor: valor,
-        forma: forma
-    });
-
-    atualizarTela();
-
-}
 
 // atualizarTela();
 
