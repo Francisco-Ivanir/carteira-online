@@ -27,7 +27,14 @@ const db = getFirestore(app);
 async function testarFirestore() {
 
   try {
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
+const codigoCliente =
+  params.get("cliente") ||
+  "cliente-teste";
     const docRef = doc(
       db,
       "clientes",
