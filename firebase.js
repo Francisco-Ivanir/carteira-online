@@ -35,12 +35,13 @@ const params =
 const codigoCliente =
   params.get("cliente") ||
   "cliente-teste";
+    
     const docRef = doc(
-      db,
-      "clientes",
-      "cliente-teste"
-    );
-
+  db,
+  "clientes",
+  codigoCliente
+);
+    
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
