@@ -55,7 +55,7 @@ historico.innerHTML = "";
 const pagamentosRef = collection(
   db,
   "clientes",
-  "cliente-teste",
+  codigoCliente,
   "pagamentos"
 );
 
