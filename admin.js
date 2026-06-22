@@ -123,9 +123,4 @@ async function carregarClientes() {
 
 }
 
-alert("Antes de carregar");
-
 carregarClientes();
-
-alert("Depois de carregar");
-
