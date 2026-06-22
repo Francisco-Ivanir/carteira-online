@@ -111,11 +111,22 @@ async function carregarClientes() {
 
     div.style.marginBottom = "10px";
 
-    div.innerHTML =
-      "<strong>" +
-      cliente.id +
-      "</strong> - " +
-      dados.nome;
+    const link =
+  "https://francisco-ivanir.github.io/carteira-online/?cliente=" +
+  cliente.id;
+
+div.innerHTML =
+  "<strong>" +
+  cliente.id +
+  "</strong> - " +
+  dados.nome +
+  "<br><br>" +
+  "<button onclick=\"window.open('" +
+  link +
+  "','_blank')\">Abrir</button> " +
+  "<button onclick=\"navigator.clipboard.writeText('" +
+  link +
+  "')\">Copiar Link</button>";
 
     lista.appendChild(div);
 
