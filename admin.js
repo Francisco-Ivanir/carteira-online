@@ -120,10 +120,28 @@ div.innerHTML =
   cliente.id +
   "</strong> - " +
   dados.nome +
+
+  "<br>" +
+
+  "Emprestado: R$ " +
+  dados.emprestado.toLocaleString("pt-BR") +
+
+  "<br>" +
+
+  "Pago: R$ " +
+  dados.pago.toLocaleString("pt-BR") +
+
+  "<br>" +
+
+  "Saldo: R$ " +
+  dados.saldo.toLocaleString("pt-BR") +
+
   "<br><br>" +
+
   "<button onclick=\"window.open('" +
   link +
   "','_blank')\">Abrir</button> " +
+
   "<button onclick=\"navigator.clipboard.writeText('" +
   link +
   "')\">Copiar Link</button>";
