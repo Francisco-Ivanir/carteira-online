@@ -118,7 +118,15 @@ console.error(erro);
 async function registrarPagamentoFirebase() {
 
   try {
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
+const codigoCliente =
+  params.get("cliente") ||
+  "cliente-teste";
+    
     const valorTexto =
       prompt("Valor recebido:");
 
