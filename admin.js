@@ -87,3 +87,41 @@ alert(
 
 window.criarCliente =
   criarCliente;
+
+async function carregarClientes() {
+
+  const lista =
+    document.getElementById("listaClientes");
+
+  lista.innerHTML = "";
+
+  const clientesRef =
+    collection(db, "clientes");
+
+  const clientesSnap =
+    await getDocs(clientesRef);
+
+  clientesSnap.forEach((cliente) => {
+
+    const dados =
+      cliente.data();
+
+    const div =
+      document.createElement("div");
+
+    div.style.marginBottom = "10px";
+
+    div.innerHTML =
+      "<strong>" +
+      cliente.id +
+      "</strong> - " +
+      dados.nome;
+
+    lista.appendChild(div);
+
+  });
+
+}
+
+carregarClientes();
+
