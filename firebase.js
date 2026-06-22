@@ -149,12 +149,12 @@ const codigoCliente =
 
     await addDoc(
 
-      collection(
-        db,
-        "clientes",
-        "cliente-teste",
-        "pagamentos"
-      ),
+  collection(
+    db,
+    "clientes",
+    codigoCliente,
+    "pagamentos"
+  ),
 
       {
         data: hoje,
