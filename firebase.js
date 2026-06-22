@@ -165,10 +165,10 @@ const codigoCliente =
     );
 
     const clienteRef = doc(
-      db,
-      "clientes",
-      "cliente-teste"
-    );
+  db,
+  "clientes",
+  codigoCliente
+);
 
     await updateDoc(
       clienteRef,
