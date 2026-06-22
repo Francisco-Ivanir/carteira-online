@@ -47,6 +47,10 @@ const codigoCliente =
     if (docSnap.exists()) {
 
       const dados = docSnap.data();
+      
+     document.getElementById("codigoCliente").innerText =
+  codigoCliente;
+      
 const historico =
   document.getElementById("historico");
 
