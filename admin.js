@@ -61,9 +61,16 @@ async function criarCliente() {
       }
     );
 
-    alert(
-      "Cliente criado: " + codigo
-    );
+    const linkCliente =
+  "https://francisco-ivanir.github.io/carteira-online/?cliente=" +
+  codigo;
+
+alert(
+  "Cliente criado: " +
+  codigo +
+  "\n\nLink:\n" +
+  linkCliente
+);
 
   } catch (erro) {
 
