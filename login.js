@@ -1,37 +1,16 @@
 function fazerLogin() {
 
-const usuario =
-document.getElementById("usuario").value;
+  alert("Entrou na função");
 
-const senha =
-document.getElementById("senha").value;
+  localStorage.setItem(
+    "adminLogado",
+    "sim"
+  );
 
-if (
-usuario === "admin" &&
-senha === "123456"
-) {
-
-```
-localStorage.setItem(
-  "adminLogado",
-  "sim"
-);
-
-window.location.href =
-  "admin.html";
-```
-
-} else {
-
-```
-alert(
-  "Usuário ou senha inválidos."
-);
-```
-
-}
+  window.location.href =
+    "admin.html";
 
 }
 
 window.fazerLogin =
-fazerLogin;
+  fazerLogin;
