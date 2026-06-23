@@ -10,6 +10,11 @@ document.getElementById("senha")
 .value
 .trim();
 
+  alert(
+  "Usuario=[" + usuario +
+  "] Senha=[" + senha + "]"
+);
+  
 if (
 usuario === "admin" &&
 senha === "123456"
