@@ -1,7 +1,5 @@
 function fazerLogin() {
 
-  alert("Botão clicado");
-
 const usuario =
 document.getElementById("usuario").value;
 
