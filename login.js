@@ -10,24 +10,20 @@ document.getElementById("senha")
 .value
 .trim();
 
-  alert(
-  "Usuario=[" + usuario +
-  "] Senha=[" + senha + "]"
-);
-  
 if (
-usuario === "admin" &&
-senha === "123456"
+usuario == "admin" &&
+senha == "123456"
 ) {
 
 ```
+alert("LOGIN OK");
+
 localStorage.setItem(
   "adminLogado",
   "sim"
 );
 
-window.location.href =
-  "admin.html";
+location.href = "admin.html";
 ```
 
 } else {
@@ -41,6 +37,7 @@ alert(
 }
 
 }
+
 
 window.fazerLogin =
 fazerLogin;
