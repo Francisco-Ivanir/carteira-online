@@ -11,10 +11,7 @@ alert(
 "\nSenha=" + senha
 );
 
-if (
-usuario === "admin" &&
-senha === "123456"
-) {
+if (true) {
 
 ```
 alert("PASSOU NO IF");
