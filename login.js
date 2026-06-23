@@ -6,35 +6,24 @@ document.getElementById("usuario").value.trim();
 const senha =
 document.getElementById("senha").value.trim();
 
-alert(
-"Usuario=" + usuario +
-"\nSenha=" + senha
-);
-
-if (true) {
-
-```
-alert("PASSOU NO IF");
+if (
+usuario === "admin" &&
+senha === "123456"
+) {
 
 localStorage.setItem(
   "adminLogado",
   "sim"
 );
 
-alert(
-  "Valor salvo: " +
-  localStorage.getItem("adminLogado")
-);
-
 window.location.href =
   "admin.html";
-```
 
 } else {
 
-```
-alert("Usuário ou senha inválidos.");
-```
+alert(
+  "Usuário ou senha inválidos."
+);
 
 }
 
