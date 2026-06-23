@@ -160,7 +160,18 @@ div.innerHTML =
     lista.appendChild(div);
 
   });
+function sair() {
 
+  localStorage.removeItem(
+    "adminLogado"
+  );
+
+  window.location.href =
+    "login.html";
+
+}
+
+window.sair = sair;
 }
 
 carregarClientes();
