@@ -155,10 +155,9 @@ div.innerHTML =
 
   "<button onclick=\"navigator.clipboard.writeText('" +
   link +
-  "')\">Copiar Link</button>";
+  "')\">Copiar Link</button>"; +
 
-    +
-" <button onclick=\"editarCliente('" +
+  " <button onclick=\"editarCliente('" +
 cliente.id +
 "')\">Editar</button>"
     
