@@ -124,6 +124,15 @@ let totalSaldo = 0;
     const dados =
       cliente.data();
 
+    totalEmprestado +=
+  dados.emprestado;
+
+totalPago +=
+  dados.pago;
+
+totalSaldo +=
+  dados.saldo;
+    
     const div =
       document.createElement("div");
 
