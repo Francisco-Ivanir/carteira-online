@@ -115,6 +115,10 @@ async function carregarClientes() {
   const clientesSnap =
     await getDocs(clientesRef);
 
+  let totalEmprestado = 0;
+let totalPago = 0;
+let totalSaldo = 0;
+  
   clientesSnap.forEach((cliente) => {
 
     const dados =
