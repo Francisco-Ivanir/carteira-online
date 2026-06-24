@@ -150,16 +150,16 @@ div.innerHTML =
   "<br><br>" +
 
   "<button onclick=\"window.open('" +
-  link +
-  "','_blank')\">Abrir</button> " +
+link +
+"','_blank')\">Abrir</button> " +
 
-  "<button onclick=\"navigator.clipboard.writeText('" +
-  link +
-  "')\">Copiar Link</button>"; +
+"<button onclick=\"navigator.clipboard.writeText('" +
+link +
+"')\">Copiar Link</button>" +
 
-  " <button onclick=\"editarCliente('" +
+" <button onclick=\"editarCliente('" +
 cliente.id +
-"')\">Editar</button>"
+"')\">Editar</button>";
     
     lista.appendChild(div);
 
