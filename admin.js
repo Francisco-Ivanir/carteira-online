@@ -179,5 +179,77 @@ function sair() {
 
 window.sair = sair;
 }
+async function editarCliente(codigo) {
 
+  try {
+
+    const docRef =
+      doc(db, "clientes", codigo);
+
+    const docSnap =
+      await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      alert("Cliente não encontrado.");
+      return;
+    }
+
+    const dados =
+      docSnap.data();
+
+    const novoNome =
+      prompt(
+        "Nome do cliente:",
+        dados.nome
+      );
+
+    if (!novoNome) return;
+
+    const adicionalTexto =
+      prompt(
+        "Valor adicional emprestado:",
+        "0"
+      );
+
+    if (adicionalTexto === null) return;
+
+    const adicional =
+      Number(
+        adicionalTexto.replace(",", ".")
+      );
+
+    if (isNaN(adicional)) {
+      alert("Valor inválido.");
+      return;
+    }
+
+    await updateDoc(docRef, {
+
+      nome: novoNome,
+
+      emprestado:
+        dados.emprestado + adicional,
+
+      saldo:
+        dados.saldo + adicional
+
+    });
+
+    alert("Cliente atualizado!");
+
+    location.reload();
+
+  } catch (erro) {
+
+    alert(
+      "Erro:\n\n" +
+      erro.message
+    );
+
+  }
+
+}
+
+window.editarCliente =
+  editarCliente;
 carregarClientes();
