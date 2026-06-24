@@ -6,6 +6,8 @@ import {
   getDocs,
   doc,
   setDoc,
+  getDoc,
+  updateDoc,
   query,
   orderBy
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
