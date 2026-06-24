@@ -257,4 +257,47 @@ async function editarCliente(codigo) {
 
 window.editarCliente =
   editarCliente;
+
+async function excluirCliente(codigo) {
+
+  const confirmacao =
+    prompt(
+      "Digite EXCLUIR para confirmar:"
+    );
+
+  if (
+    confirmacao !== "EXCLUIR"
+  ) {
+    return;
+  }
+
+  try {
+
+    await deleteDoc(
+      doc(
+        db,
+        "clientes",
+        codigo
+      )
+    );
+
+    alert(
+      "Cliente excluído!"
+    );
+
+    location.reload();
+
+  } catch (erro) {
+
+    alert(
+      "Erro:\n\n" +
+      erro.message
+    );
+
+  }
+
+}
+
+window.excluirCliente =
+  excluirCliente;
 carregarClientes();
