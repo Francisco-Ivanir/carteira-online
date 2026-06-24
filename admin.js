@@ -184,6 +184,29 @@ cliente.id +
     lista.appendChild(div);
 
   });
+
+  document.getElementById(
+  "resumo"
+).innerHTML =
+
+  "<strong>Clientes:</strong> " +
+  clientesSnap.size +
+
+  "<br><br>" +
+
+  "<strong>Total Emprestado:</strong> R$ " +
+  totalEmprestado.toLocaleString("pt-BR") +
+
+  "<br>" +
+
+  "<strong>Total Recebido:</strong> R$ " +
+  totalPago.toLocaleString("pt-BR") +
+
+  "<br>" +
+
+  "<strong>Saldo em Aberto:</strong> R$ " +
+  totalSaldo.toLocaleString("pt-BR");
+  
 function sair() {
 
   localStorage.removeItem(
