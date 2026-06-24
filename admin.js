@@ -157,6 +157,11 @@ div.innerHTML =
   link +
   "')\">Copiar Link</button>";
 
+    +
+" <button onclick=\"editarCliente('" +
+cliente.id +
+"')\">Editar</button>"
+    
     lista.appendChild(div);
 
   });
