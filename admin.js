@@ -161,7 +161,11 @@ link +
 
 " <button onclick=\"editarCliente('" +
 cliente.id +
-"')\">Editar</button>";
+"')\">Editar</button>" +
+
+" <button onclick=\"excluirCliente('" +
+cliente.id +
+"')\">Excluir</button>";
     
     lista.appendChild(div);
 
