@@ -135,7 +135,8 @@ totalSaldo +=
     
     const div =
       document.createElement("div");
-
+div.className = "cliente";
+    
     div.style.marginBottom = "10px";
 
     const link =
