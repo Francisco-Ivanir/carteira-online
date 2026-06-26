@@ -341,7 +341,38 @@ async function excluirCliente(codigo) {
   }
 
 }
-
 window.excluirCliente =
   excluirCliente;
+
+function filtrarClientes() {
+
+  const texto =
+    document.getElementById("pesquisa")
+    .value
+    .toLowerCase();
+
+  const clientes =
+    document.querySelectorAll(".cliente");
+
+  clientes.forEach((cliente) => {
+
+    if (
+      cliente.dataset.busca.includes(texto)
+    ) {
+
+      cliente.style.display = "";
+
+    } else {
+
+      cliente.style.display = "none";
+
+    }
+
+  });
+
+}
+
+window.filtrarClientes =
+  filtrarClientes;
+
 carregarClientes();
