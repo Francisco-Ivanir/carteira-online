@@ -341,6 +341,7 @@ async function excluirCliente(codigo) {
   }
 
 }
+
 window.excluirCliente =
   excluirCliente;
 
