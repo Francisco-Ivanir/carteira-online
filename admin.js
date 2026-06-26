@@ -121,28 +121,20 @@ let totalSaldo = 0;
   
   clientesSnap.forEach((cliente) => {
 
-    const dados =
-      cliente.data();
-    
+   const dados =
+  cliente.data();
+
+const div =
+  document.createElement("div");
+
+div.className = "cliente";
+
 div.dataset.busca =
 (
   cliente.id +
   " " +
   dados.nome
 ).toLowerCase();
-    
-    totalEmprestado +=
-  dados.emprestado;
-
-totalPago +=
-  dados.pago;
-
-totalSaldo +=
-  dados.saldo;
-    
-    const div =
-      document.createElement("div");
-div.className = "cliente";
     
     div.style.marginBottom = "10px";
 
