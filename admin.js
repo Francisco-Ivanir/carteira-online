@@ -123,7 +123,14 @@ let totalSaldo = 0;
 
     const dados =
       cliente.data();
-
+    
+div.dataset.busca =
+(
+  cliente.id +
+  " " +
+  dados.nome
+).toLowerCase();
+    
     totalEmprestado +=
   dados.emprestado;
 
