@@ -145,15 +145,13 @@ const div =
 
 div.className = "cliente";
 
-div.dataset.busca =
-(
-  cliente.id +
-  " " +
-  dados.nome
-).toLowerCase();
+div.style.background = "#ffffff";
+div.style.padding = "15px";
+div.style.marginBottom = "15px";
+div.style.borderRadius = "10px";
+div.style.boxShadow =
+  "0 2px 8px rgba(0,0,0,0.1)";
     
-    div.style.marginBottom = "10px";
-
     const link =
   "https://francisco-ivanir.github.io/carteira-online/?cliente=" +
   cliente.id;
