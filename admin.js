@@ -129,8 +129,6 @@ let totalSaldo = 0;
    const dados =
   cliente.data();
     
-  
-    
 totalEmprestado +=
   dados.emprestado;
 
@@ -144,7 +142,13 @@ const div =
   document.createElement("div");
 
 div.className = "cliente";
-
+div.dataset.busca =
+(
+  cliente.id +
+  " " +
+  dados.nome
+).toLowerCase();
+    
 div.style.background = "#ffffff";
 div.style.padding = "15px";
 div.style.marginBottom = "15px";
