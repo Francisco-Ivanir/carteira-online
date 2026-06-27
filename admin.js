@@ -132,6 +132,36 @@ let totalSaldo = 0;
    let ultimoPagamento =
   "Nenhum";
 
+    const pagamentosRef =
+  collection(
+    db,
+    "clientes",
+    cliente.id,
+    "pagamentos"
+  );
+
+const pagamentosQuery =
+  query(
+    pagamentosRef
+  );
+
+const pagamentosSnap =
+  await getDocs(
+    pagamentosQuery
+  );
+
+pagamentosSnap.forEach(
+  (pagamento) => {
+
+    const item =
+      pagamento.data();
+
+    ultimoPagamento =
+      item.data;
+
+  }
+);
+    
 totalEmprestado +=
   dados.emprestado;
 
