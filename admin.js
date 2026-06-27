@@ -129,6 +129,9 @@ let totalSaldo = 0;
    const dados =
   cliente.data();
     
+   let ultimoPagamento =
+  "Nenhum";
+
 totalEmprestado +=
   dados.emprestado;
 
