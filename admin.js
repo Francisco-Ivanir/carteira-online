@@ -168,8 +168,8 @@ formatarMoeda(dados.emprestado) +
 
   "<br>" +
 
-  "Pago: R$ " +
-  dados.pago.toLocaleString("pt-BR") +
+ "Pago: " +
+formatarMoeda(dados.pago)
 
   "<br>" +
 
