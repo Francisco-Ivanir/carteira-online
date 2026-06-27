@@ -1,3 +1,10 @@
+// VERSÃO 1.0 ESTÁVEL
+// Login OK
+// Pesquisa OK
+// Editar OK
+// Excluir OK
+// Resumo OK
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
 import {
