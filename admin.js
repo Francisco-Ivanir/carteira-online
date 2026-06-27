@@ -173,8 +173,8 @@ formatarMoeda(dados.pago)
 
   "<br>" +
 
-  "Saldo: R$ " +
-  dados.saldo.toLocaleString("pt-BR") +
+"Saldo: " +
+formatarMoeda(dados.saldo)
 
   "<br><br>" +
 
