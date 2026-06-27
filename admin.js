@@ -164,7 +164,7 @@ div.innerHTML =
   "<br>" +
 
  "Emprestado: " +
-formatarMoeda(dados.emprestado)
+formatarMoeda(dados.emprestado) +
 
   "<br>" +
 
