@@ -174,8 +174,17 @@ div.innerHTML =
 
   "<br>" +
 
-  "Saldo: " +
-  formatarMoeda(dados.saldo) +
+  "Saldo: <strong style='color:" +
+
+(dados.saldo > 0
+  ? "red"
+  : "green") +
+
+"'>" +
+
+formatarMoeda(dados.saldo) +
+
+"</strong>"
 
   "<br><br>";
     
