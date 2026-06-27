@@ -13,6 +13,10 @@ import {
   orderBy
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
+import {
+  formatarMoeda
+} from "./utils.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBy_A8aU9d1Z03RKyedqEkJn6VtYICHjoQ",
   authDomain: "carteira-online-5366a.firebaseapp.com",
