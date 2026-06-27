@@ -197,26 +197,26 @@ div.innerHTML =
 
   "<br>" +
 
- "Emprestado: " +
-formatarMoeda(dados.emprestado) +
+  "Emprestado: " +
+  formatarMoeda(dados.emprestado) +
 
   "<br>" +
 
- "Pago: " +
-formatarMoeda(dados.pago)
+  "Pago: " +
+  formatarMoeda(dados.pago) +
 
   "<br>" +
 
-"Saldo: " +
-formatarMoeda(dados.saldo) +
+  "Saldo: " +
+  formatarMoeda(dados.saldo) +
 
-"<br>" +
+  "<br>" +
 
-"Último pagamento: " +
-ultimoPagamento +
+  "Último pagamento: " +
+  ultimoPagamento +
 
-"<br><br>"
-
+  "<br><br>";
+    
   "<button onclick=\"window.open('" +
 link +
 "','_blank')\">Abrir</button> " +
