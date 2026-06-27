@@ -208,15 +208,14 @@ formatarMoeda(dados.pago)
   "<br>" +
 
 "Saldo: " +
-formatarMoeda(dados.saldo)
+formatarMoeda(dados.saldo) +
 
-    +
 "<br>" +
 
 "Último pagamento: " +
-ultimoPagamento
-    
-  "<br><br>" +
+ultimoPagamento +
+
+"<br><br>"
 
   "<button onclick=\"window.open('" +
 link +
