@@ -154,8 +154,8 @@ div.innerHTML =
 
   "<br>" +
 
-  "Emprestado: R$ " +
-  dados.emprestado.toLocaleString("pt-BR") +
+ "Emprestado: " +
+formatarMoeda(dados.emprestado)
 
   "<br>" +
 
