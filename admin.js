@@ -184,9 +184,9 @@ div.innerHTML =
 
 formatarMoeda(dados.saldo) +
 
-"</strong>"
+"</strong>" +
 
-  "<br><br>";
+"<br><br>" +
     
   "<button onclick=\"window.open('" +
 link +
