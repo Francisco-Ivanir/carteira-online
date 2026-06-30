@@ -450,4 +450,6 @@ async function registrarPagamentoAdmin(
   }
 
 }
+window.registrarPagamentoAdmin =
+  registrarPagamentoAdmin;
 carregarClientes();
