@@ -454,42 +454,44 @@ return;
 const dadosCliente =
 clienteSnap.data();
 
+alert("ANTES DO addDoc");
+
 await addDoc(
-collection(
-db,
-"clientes",
-codigoCliente,
-"pagamentos"
-),
-{
-data:
-new Date()
-.toLocaleDateString("pt-BR"),
-valor: valor,
-forma: forma
-}
+  collection(
+    db,
+    "clientes",
+    codigoCliente,
+    "pagamentos"
+  ),
+  {
+    data:
+      new Date()
+      .toLocaleDateString("pt-BR"),
+    valor: valor,
+    forma: forma
+  }
 );
 
-const novoPago =
-(dadosCliente.pago || 0)
+alert("DEPOIS DO addDoc");
 
-* valor;
+const novoPago =
+  (dadosCliente.pago || 0)
+  + valor;
 
 const novoSaldo =
-(dadosCliente.emprestado || 0)
-
-* novoPago;
+  (dadosCliente.emprestado || 0)
+  - novoPago;
 
 await updateDoc(
-clienteRef,
-{
-pago: novoPago,
-saldo: novoSaldo
-}
+  clienteRef,
+  {
+    pago: novoPago,
+    saldo: novoSaldo
+  }
 );
 
 alert(
-"Pagamento registrado com sucesso!"
+  "Pagamento registrado com sucesso!"
 );
 
 
