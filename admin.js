@@ -207,6 +207,10 @@ link +
 link +
 "')\">Copiar Link</button>" +
 
+" <button onclick=\"registrarPagamentoAdmin('" +
+cliente.id +
+"')\">Pagamento</button>" +
+
 " <button onclick=\"editarCliente('" +
 cliente.id +
 "')\">Editar</button>" +
@@ -402,4 +406,17 @@ function filtrarClientes() {
 window.filtrarClientes =
   filtrarClientes;
 
+async function registrarPagamentoAdmin(
+  codigoCliente
+) {
+
+  alert(
+    "Pagamento de: " +
+    codigoCliente
+  );
+
+}
+
+window.registrarPagamentoAdmin =
+  registrarPagamentoAdmin;
 carregarClientes();
