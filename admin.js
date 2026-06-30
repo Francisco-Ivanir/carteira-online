@@ -434,12 +434,64 @@ async function registrarPagamentoAdmin(
       forma = "Não informado";
     }
 
-    alert(
-      "Cliente: " +
-      codigoCliente +
-      "\nValor: R$ " +
-      valor
-    );
+   const clienteRef =
+doc(
+db,
+"clientes",
+codigoCliente
+);
+
+const clienteSnap =
+await getDoc(clienteRef);
+
+if (!clienteSnap.exists()) {
+
+alert("Cliente não encontrado");
+return;
+
+}
+
+const dadosCliente =
+clienteSnap.data();
+
+await addDoc(
+collection(
+db,
+"clientes",
+codigoCliente,
+"pagamentos"
+),
+{
+data:
+new Date()
+.toLocaleDateString("pt-BR"),
+valor: valor,
+forma: forma
+}
+);
+
+const novoPago =
+(dadosCliente.pago || 0)
+
+* valor;
+
+const novoSaldo =
+(dadosCliente.emprestado || 0)
+
+* novoPago;
+
+await updateDoc(
+clienteRef,
+{
+pago: novoPago,
+saldo: novoSaldo
+}
+);
+
+alert(
+"Pagamento registrado com sucesso!"
+);
+
 
   } catch (erro) {
 
