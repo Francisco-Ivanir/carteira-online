@@ -410,13 +410,44 @@ async function registrarPagamentoAdmin(
   codigoCliente
 ) {
 
-  alert(
-    "Pagamento de: " +
-    codigoCliente
-  );
+  try {
+
+    const valorTexto =
+      prompt("Valor recebido:");
+
+    if (!valorTexto) return;
+
+    const valor =
+      Number(
+        valorTexto.replace(",", ".")
+      );
+
+    if (isNaN(valor)) return;
+
+    let forma =
+      prompt(
+        "Forma de pagamento (PIX ou Dinheiro)"
+      );
+
+    if (!forma) {
+      forma = "Não informado";
+    }
+
+    alert(
+      "Cliente: " +
+      codigoCliente +
+      "\nValor: R$ " +
+      valor
+    );
+
+  } catch (erro) {
+
+    alert(
+      "Erro:\n" +
+      erro.message
+    );
+
+  }
 
 }
-
-window.registrarPagamentoAdmin =
-  registrarPagamentoAdmin;
 carregarClientes();
