@@ -454,8 +454,6 @@ return;
 const dadosCliente =
 clienteSnap.data();
 
-alert("ANTES DO addDoc");
-
 await addDoc(
   collection(
     db,
@@ -471,8 +469,6 @@ await addDoc(
     forma: forma
   }
 );
-
-alert("DEPOIS DO addDoc");
 
 const novoPago =
   (dadosCliente.pago || 0)
