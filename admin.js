@@ -1,9 +1,14 @@
-// VERSÃO 1.0 ESTÁVEL
+// CARTEIRA ONLINE
+// VERSÃO 1.1 ESTÁVEL
+//
 // Login OK
 // Pesquisa OK
 // Editar OK
 // Excluir OK
-// Resumo OK
+// Pagamento via Admin OK
+// Atualização de saldo automática OK
+//
+// Backup criado em 02/07/2026
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
