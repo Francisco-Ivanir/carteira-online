@@ -514,16 +514,53 @@ window.registrarPagamentoAdmin =
   registrarPagamentoAdmin;
 
 async function registrarEmprestimoAdmin(
-  codigoCliente
+codigoCliente
 ) {
 
-  alert(
-    "Empréstimo para: " +
-    codigoCliente
+try {
+
+```
+const valorTexto =
+  prompt("Valor do empréstimo:");
+
+if (!valorTexto) return;
+
+const valor =
+  Number(
+    valorTexto.replace(",", ".")
   );
+
+if (isNaN(valor)) return;
+
+const descricao =
+  prompt("Descrição do empréstimo:");
+
+if (!descricao) return;
+
+alert(
+  "Cliente: " +
+  codigoCliente +
+  "\nValor: R$ " +
+  valor +
+  "\nDescrição: " +
+  descricao
+);
+```
+
+} catch (erro) {
+
+```
+alert(
+  "Erro:\n" +
+  erro.message
+);
+```
+
+}
 
 }
 
 window.registrarEmprestimoAdmin =
-  registrarEmprestimoAdmin;
+registrarEmprestimoAdmin;
+
 carregarClientes();
