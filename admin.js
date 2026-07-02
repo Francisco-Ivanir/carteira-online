@@ -212,7 +212,11 @@ link +
 "<button onclick=\"navigator.clipboard.writeText('" +
 link +
 "')\">Copiar Link</button>" +
-
+  
+" <button onclick=\"registrarEmprestimoAdmin('" +
+cliente.id +
+"')\">Empréstimo</button>" +
+  
 " <button onclick=\"registrarPagamentoAdmin('" +
 cliente.id +
 "')\">Pagamento</button>" +
