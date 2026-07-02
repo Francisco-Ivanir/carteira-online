@@ -536,6 +536,26 @@ const descricao =
 
 if (!descricao) return;
 
+  alert("ANTES DO addDoc");
+
+await addDoc(
+  collection(
+    db,
+    "clientes",
+    codigoCliente,
+    "emprestimos"
+  ),
+  {
+    data:
+      new Date()
+      .toLocaleDateString("pt-BR"),
+    valor: Number(valor),
+    descricao: descricao
+  }
+);
+
+alert("DEPOIS DO addDoc");
+  
 alert(
   "Cliente: " +
   codigoCliente +
