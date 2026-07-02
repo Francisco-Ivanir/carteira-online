@@ -519,7 +519,6 @@ codigoCliente
 
 try {
 
-```
 const valorTexto =
   prompt("Valor do empréstimo:");
 
@@ -545,16 +544,13 @@ alert(
   "\nDescrição: " +
   descricao
 );
-```
 
 } catch (erro) {
 
-```
 alert(
   "Erro:\n" +
   erro.message
 );
-```
 
 }
 
