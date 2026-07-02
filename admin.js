@@ -512,4 +512,18 @@ alert(
 }
 window.registrarPagamentoAdmin =
   registrarPagamentoAdmin;
+
+async function registrarEmprestimoAdmin(
+  codigoCliente
+) {
+
+  alert(
+    "Empréstimo para: " +
+    codigoCliente
+  );
+
+}
+
+window.registrarEmprestimoAdmin =
+  registrarEmprestimoAdmin;
 carregarClientes();
