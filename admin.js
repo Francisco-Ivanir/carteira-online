@@ -536,7 +536,6 @@ const descricao =
 
 if (!descricao) return;
 
-  alert("ANTES DO addDoc");
 
 await addDoc(
   collection(
@@ -553,8 +552,6 @@ await addDoc(
     descricao: descricao
   }
 );
-
-alert("DEPOIS DO addDoc");
 
   const clienteRef =
   doc(
