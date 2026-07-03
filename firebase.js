@@ -47,6 +47,69 @@ const codigoCliente =
     if (docSnap.exists()) {
 
       const dados = docSnap.data();
+
+      const listaEmprestimos =
+  document.getElementById(
+    "listaEmprestimos"
+  );
+
+listaEmprestimos.innerHTML = "";
+
+const emprestimosRef =
+  collection(
+    db,
+    "clientes",
+    codigoCliente,
+    "emprestimos"
+  );
+
+const emprestimosSnap =
+  await getDocs(
+    emprestimosRef
+  );
+
+if (emprestimosSnap.empty) {
+
+  listaEmprestimos.innerHTML =
+    "Nenhum empréstimo registrado.";
+
+} else {
+
+  emprestimosSnap.forEach(
+    (emprestimo) => {
+
+      const item =
+        emprestimo.data();
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+      div.style.marginBottom =
+        "15px";
+
+      div.innerHTML =
+        "<strong>" +
+        item.data +
+        "</strong><br>" +
+
+        "R$ " +
+        item.valor.toLocaleString(
+          "pt-BR"
+        ) +
+        "<br>" +
+
+        item.descricao;
+
+      listaEmprestimos.appendChild(
+        div
+      );
+
+    }
+  );
+
+}
       
      document.getElementById("codigoCliente").innerText =
   codigoCliente;
