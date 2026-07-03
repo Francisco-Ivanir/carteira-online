@@ -555,6 +555,39 @@ await addDoc(
 );
 
 alert("DEPOIS DO addDoc");
+
+  const clienteRef =
+  doc(
+    db,
+    "clientes",
+    codigoCliente
+  );
+
+const clienteSnap =
+  await getDoc(clienteRef);
+
+const dadosCliente =
+  clienteSnap.data();
+
+const novoEmprestado =
+  (dadosCliente.emprestado || 0)
+  + Number(valor);
+
+const novoSaldo =
+  (dadosCliente.saldo || 0)
+  + Number(valor);
+
+await updateDoc(
+  clienteRef,
+  {
+    emprestado: novoEmprestado,
+    saldo: novoSaldo
+  }
+);
+
+alert(
+  "Empréstimo registrado com sucesso!"
+);
   
 alert(
   "Cliente: " +
