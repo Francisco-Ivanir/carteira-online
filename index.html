@@ -224,5 +224,48 @@ OK
 
 </div>
     
+<div id="modalEmprestimos"
+style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+z-index:9999;
+">
+
+<div
+style="
+background:white;
+width:90%;
+max-width:500px;
+margin:50px auto;
+padding:20px;
+border-radius:10px;
+">
+
+<h3>📋 Resumo dos Empréstimos</h3>
+
+<div id="listaEmprestimos">
+Teste
+</div>
+
+<br>
+
+<button
+onclick="
+document.getElementById(
+'modalEmprestimos'
+).style.display='none';
+">
+Entendi
+</button>
+
+</div>
+
+</div>
+    
 </body>
 </html>
