@@ -33,7 +33,7 @@ const params =
   );
 
 const codigoCliente =
-  "CLI005";
+  "CLI006";
     
     const docRef = doc(
   db,
