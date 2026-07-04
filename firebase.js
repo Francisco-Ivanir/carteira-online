@@ -74,6 +74,13 @@ if (!emprestimosSnap.empty) {
     "modalEmprestimos"
   ).style.display = "block";
 
+  if (emprestimosSnap.empty) {
+
+  listaEmprestimos.innerHTML =
+    "Nenhum empréstimo registrado.";
+
+} else {
+    
   emprestimosSnap.forEach(
     (emprestimo) => {
 
