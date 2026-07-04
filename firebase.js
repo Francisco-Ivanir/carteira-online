@@ -77,9 +77,6 @@ if (!emprestimosSnap.empty) {
   emprestimosSnap.forEach(
     (emprestimo) => {
 
-  emprestimosSnap.forEach(
-    (emprestimo) => {
-
       const item =
         emprestimo.data();
 
