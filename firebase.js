@@ -113,7 +113,7 @@ if (!emprestimosSnap.empty) {
     "Nenhum empréstimo registrado.";
 
 }
-}
+
       
      document.getElementById("codigoCliente").innerText =
   codigoCliente;
