@@ -107,7 +107,12 @@ if (!emprestimosSnap.empty) {
 
     }
   );
+} else {
 
+  listaEmprestimos.innerHTML =
+    "Nenhum empréstimo registrado.";
+
+}
 }
       
      document.getElementById("codigoCliente").innerText =
