@@ -68,12 +68,14 @@ const emprestimosSnap =
     emprestimosRef
   );
 
-if (emprestimosSnap.empty) {
+if (!emprestimosSnap.empty) {
 
-  listaEmprestimos.innerHTML =
-    "Nenhum empréstimo registrado.";
+  document.getElementById(
+    "modalEmprestimos"
+  ).style.display = "block";
 
-} else {
+  emprestimosSnap.forEach(
+    (emprestimo) => {
 
   emprestimosSnap.forEach(
     (emprestimo) => {
