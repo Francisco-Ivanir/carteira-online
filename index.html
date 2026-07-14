@@ -251,6 +251,23 @@ function abrirPix(){
 
 </script>
 
+    function copiarPix(){
+
+  const chave =
+    document.getElementById(
+      "chavePix"
+    ).innerText;
+
+  navigator.clipboard.writeText(
+    chave
+  );
+
+  alert(
+    "Chave PIX copiada!"
+  );
+
+}
+    
     <div id="modalPix"
 style="
 display:none;
