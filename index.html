@@ -268,8 +268,22 @@ function abrirPix(){
 
         function abrirWhatsApp(){
 
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const codigoCliente =
+    params.get("cliente") ||
+    "Cliente";
+
   const mensagem =
-    "Olá, realizei um pagamento via PIX da minha carteira. Vou enviar o comprovante.";
+    "Olá, sou o cliente " +
+    codigoCliente +
+    ".\n\n" +
+    "Realizei um pagamento via PIX da minha carteira." +
+    "\n\n" +
+    "Segue o comprovante.";
 
   const numero =
     "5521982034341";
@@ -278,9 +292,14 @@ function abrirPix(){
     "https://wa.me/" +
     numero +
     "?text=" +
-    encodeURIComponent(mensagem);
+    encodeURIComponent(
+      mensagem
+    );
 
-  window.open(link, "_blank");
+  window.open(
+    link,
+    "_blank"
+  );
 
 }
         
