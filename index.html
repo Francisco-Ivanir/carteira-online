@@ -265,6 +265,24 @@ function abrirPix(){
   );
 
 }
+
+        function abrirWhatsApp(){
+
+  const mensagem =
+    "Olá, realizei um pagamento via PIX da minha carteira. Vou enviar o comprovante.";
+
+  const numero =
+    "5521982034341";
+
+  const link =
+    "https://wa.me/" +
+    numero +
+    "?text=" +
+    encodeURIComponent(mensagem);
+
+  window.open(link, "_blank");
+
+}
         
 </script>
 
@@ -333,7 +351,10 @@ id="chavePix">
 📋 Copiar chave PIX
 </button>
 
-
+<button onclick="abrirWhatsApp()">
+📲 Enviar comprovante pelo WhatsApp
+</button>
+    
 <p>
 Após o pagamento, envie o comprovante para confirmação.
 </p>
