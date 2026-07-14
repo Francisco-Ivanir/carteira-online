@@ -250,6 +250,80 @@ function abrirPix(){
 }
 
 </script>
+
+    <div id="modalPix"
+style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+z-index:9999;
+">
+
+<div
+style="
+background:white;
+width:90%;
+max-width:450px;
+margin:30px auto;
+padding:20px;
+border-radius:10px;
+max-height:80vh;
+overflow:auto;
+">
+
+<h2>
+💰 Pagamento via PIX
+</h2>
+
+<p>
+Saldo em aberto:
+</p>
+
+<h3 id="saldoPix">
+Carregando...
+</h3>
+
+<p>
+Copie a chave PIX abaixo:
+</p>
+
+<div
+style="
+background:#eee;
+padding:10px;
+border-radius:8px;
+word-break:break-all;
+"
+id="chavePix">
+SUA_CHAVE_PIX_AQUI
+</div>
+
+
+<button onclick="copiarPix()">
+📋 Copiar chave PIX
+</button>
+
+
+<p>
+Após o pagamento, envie o comprovante para confirmação.
+</p>
+
+
+<button onclick="
+document.getElementById(
+'modalPix'
+).style.display='none';
+">
+Fechar
+</button>
+
+</div>
+
+</div>
     
 </body>
 </html>
