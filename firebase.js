@@ -161,6 +161,14 @@ document.getElementById("pago").innerText =
 document.getElementById("saldo").innerText =
   "R$ " + dados.saldo.toLocaleString("pt-BR");
 
+      document.getElementById(
+  "saldoPix"
+).innerText =
+  "R$ " +
+  dados.saldo.toLocaleString(
+    "pt-BR"
+  );
+
 const percentual =
   (dados.pago / dados.emprestado) * 100;
 
