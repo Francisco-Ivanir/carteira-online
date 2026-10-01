@@ -55,6 +55,7 @@ const codigoCliente =
 
 listaEmprestimos.innerHTML = "";
 
+
 const emprestimosRef =
   collection(
     db,
@@ -74,11 +75,41 @@ if (!emprestimosSnap.empty) {
     "modalEmprestimos"
   ).style.display = "block";
 
-  emprestimosSnap.forEach(
-    (emprestimo) => {
+  const emprestimos =
+    emprestimosSnap.docs.map(
+      (doc) => doc.data()
+    );
 
-      const item =
-        emprestimo.data();
+  function converterData(valor) {
+    if (!valor) return 0;
+
+    const texto = String(valor);
+    const partes = texto.split("/");
+
+    if (partes.length === 3) {
+      return new Date(
+        Number(partes[2]),
+        Number(partes[1]) - 1,
+        Number(partes[0])
+      ).getTime();
+    }
+
+    const dataConvertida =
+      new Date(texto).getTime();
+
+    return Number.isNaN(dataConvertida)
+      ? 0
+      : dataConvertida;
+  }
+
+  emprestimos.sort(
+    (a, b) =>
+      converterData(b.data) -
+      converterData(a.data)
+  );
+
+  emprestimos.forEach(
+    (item) => {
 
       const div =
         document.createElement(
@@ -107,6 +138,7 @@ if (!emprestimosSnap.empty) {
 
     }
   );
+
 } else {
 
   listaEmprestimos.innerHTML =
