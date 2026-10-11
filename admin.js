@@ -548,6 +548,7 @@ await addDoc(
     data:
       new Date()
       .toLocaleDateString("pt-BR"),
+     criadoEm: new Date(),
     valor: Number(valor),
     descricao: descricao
   }
