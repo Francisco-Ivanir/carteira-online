@@ -55,12 +55,13 @@ if (
 
 }
 
+
 async function criarCliente() {
 
   try {
 
     const nome =
-      document.getElementById("nome").value;
+      document.getElementById("nome").value.trim();
 
     const emprestado =
       Number(
@@ -72,51 +73,90 @@ async function criarCliente() {
       return;
     }
 
-    const clientesRef =
-      collection(db, "clientes");
+    if (!Number.isFinite(emprestado) || emprestado < 0) {
+      alert("Informe um valor válido.");
+      return;
+    }
 
-    const clientesSnap =
-      await getDocs(clientesRef);
+    const contadorRef =
+      doc(db, "configuracao", "contadorClientes");
 
-    const proximoNumero =
-      clientesSnap.size + 1;
+    const numeroCriado = await runTransaction(
+      db,
+      async (transacao) => {
 
-    const codigo =
-      "CLI" +
-      String(proximoNumero)
-        .padStart(3, "0");
+        const contadorSnap =
+          await transacao.get(contadorRef);
 
-    await setDoc(
-      doc(db, "clientes", codigo),
-      {
-        nome: nome,
-        emprestado: emprestado,
-        pago: 0,
-        saldo: emprestado
+        // CLI014 é o maior código informado.
+        let ultimoNumero = contadorSnap.exists()
+          ? Number(contadorSnap.data().ultimoNumero)
+          : 14;
+
+        if (
+          !Number.isInteger(ultimoNumero) ||
+          ultimoNumero < 14
+        ) {
+          ultimoNumero = 14;
+        }
+
+        const proximoNumero = ultimoNumero + 1;
+
+        const codigo =
+          "CLI" +
+          String(proximoNumero).padStart(3, "0");
+
+        const clienteRef =
+          doc(db, "clientes", codigo);
+
+        const clienteSnap =
+          await transacao.get(clienteRef);
+
+        if (clienteSnap.exists()) {
+          throw new Error(
+            "O código " + codigo +
+            " já existe. Nenhum dado foi alterado."
+          );
+        }
+
+        transacao.set(clienteRef, {
+          nome: nome,
+          emprestado: emprestado,
+          pago: 0,
+          saldo: emprestado
+        });
+
+        transacao.set(contadorRef, {
+          ultimoNumero: proximoNumero
+        });
+
+        return codigo;
+
       }
     );
 
     const linkCliente =
-  "https://francisco-ivanir.github.io/carteira-online/?cliente=" +
-  codigo;
+      "https://francisco-ivanir.github.io/carteira-online/?cliente=" +
+      numeroCriado;
 
-alert(
-  "Cliente criado: " +
-  codigo +
-  "\n\nLink:\n" +
-  linkCliente
-);
+    alert(
+      "Cliente criado: " +
+      numeroCriado +
+      "\n\nLink:\n" +
+      linkCliente
+    );
 
   } catch (erro) {
 
     alert(
-      "Erro:\n\n" +
+      "Erro ao criar cliente:\n\n" +
       erro.message
     );
 
   }
 
 }
+
 
 window.criarCliente =
   criarCliente;
