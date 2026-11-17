@@ -12,12 +12,12 @@ import {
 // QUE JÁ ESTÁ NO ARQUIVO admin.js
 
 const firebaseConfig = {
-  apiKey: "COLE_AQUI_A_MESMA_API_KEY_DO_ADMIN_JS",
+   apiKey: "AIzaSyBy_A8aU9d1Z03RKyedqEkJn6VtYICHjoQ",
   authDomain: "carteira-online-5366a.firebaseapp.com",
   projectId: "carteira-online-5366a",
   storageBucket: "carteira-online-5366a.firebasestorage.app",
   messagingSenderId: "769056199373",
-  appId: "COLE_AQUI_O_MESMO_APP_ID_DO_ADMIN_JS"
+  appId: "1:769056199373:web:39bef0ef4ddf13e701cf84"
 };
 
 const app = initializeApp(firebaseConfig);
