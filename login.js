@@ -1,31 +1,77 @@
-function fazerLogin() {
 
-const usuario =
-document.getElementById("usuario").value.trim();
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
-const senha =
-document.getElementById("senha").value.trim();
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-if (
-usuario === "admin" &&
-senha === "123456"
-) {
+// UTILIZAR A MESMA CONFIGURAÇÃO DO FIREBASE
+// QUE JÁ ESTÁ NO ARQUIVO admin.js
 
-localStorage.setItem(
-  "adminLogado",
-  "sim"
-);
+const firebaseConfig = {
+  apiKey: "COLE_AQUI_A_MESMA_API_KEY_DO_ADMIN_JS",
+  authDomain: "carteira-online-5366a.firebaseapp.com",
+  projectId: "carteira-online-5366a",
+  storageBucket: "carteira-online-5366a.firebasestorage.app",
+  messagingSenderId: "769056199373",
+  appId: "COLE_AQUI_O_MESMO_APP_ID_DO_ADMIN_JS"
+};
 
-window.location.href =
-  "admin.html";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-} else {
+async function fazerLogin() {
 
-alert(
-  "Usuário ou senha inválidos."
-);
+  const usuario =
+    document.getElementById("usuario").value.trim();
 
-}
+  const senha =
+    document.getElementById("senha").value;
+
+  if (!usuario || !senha) {
+    alert("Informe o e-mail e a senha.");
+    return;
+  }
+
+  try {
+
+    await signInWithEmailAndPassword(
+      auth,
+      usuario,
+      senha
+    );
+
+    // Compatibilidade temporária com o painel antigo.
+    // Será removida na próxima etapa.
+    localStorage.setItem("adminLogado", "sim");
+
+    window.location.href = "admin.html";
+
+  } catch (erro) {
+
+    console.error("Erro no login:", erro);
+
+    if (
+      erro.code === "auth/invalid-credential" ||
+      erro.code === "auth/wrong-password" ||
+      erro.code === "auth/user-not-found"
+    ) {
+
+      alert("E-mail ou senha incorretos.");
+
+    } else {
+
+      alert(
+        "Não foi possível entrar.\n\n" +
+        erro.message
+      );
+
+    }
+
+  }
 
 }
 
