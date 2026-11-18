@@ -51,17 +51,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-if (
-  localStorage.getItem(
-    "adminLogado"
-  ) !== "sim"
-) {
-
-  window.location.href =
-    "login.html";
-
-}
-
 
 async function criarCliente() {
 
