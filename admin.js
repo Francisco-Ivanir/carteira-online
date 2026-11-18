@@ -292,19 +292,16 @@ cliente.id +
   "<strong>Saldo em Aberto:</strong> R$ " +
   totalSaldo.toLocaleString("pt-BR");
   
-function sair() {
+async function sair() {
 
-  localStorage.removeItem(
-    "adminLogado"
-  );
+  await signOut(auth);
 
-  window.location.href =
-    "login.html";
+  window.location.href = "login.html";
 
 }
 
 window.sair = sair;
-}
+  
 async function editarCliente(codigo) {
 
   try {
@@ -647,4 +644,37 @@ alert(
 window.registrarEmprestimoAdmin =
 registrarEmprestimoAdmin;
 
-carregarClientes();
+onAuthStateChanged(auth, async (usuario) => {
+
+  const UID_ADMINISTRADOR =
+    "p5VKHfDsmWaowPo3d0be5OVtW8B3";
+
+  if (
+    !usuario ||
+    usuario.uid !== UID_ADMINISTRADOR
+  ) {
+
+    if (usuario) {
+      await signOut(auth);
+    }
+
+    window.location.replace("login.html");
+    return;
+
+  }
+
+  try {
+
+    await carregarClientes();
+
+  } catch (erro) {
+
+    console.error("Erro ao carregar painel:", erro);
+
+    alert(
+      "Não foi possível carregar os dados do painel."
+    );
+
+  }
+
+});
