@@ -44,10 +44,6 @@ async function fazerLogin() {
       senha
     );
 
-    // Compatibilidade temporária com o painel antigo.
-    // Será removida na próxima etapa.
-    localStorage.setItem("adminLogado", "sim");
-
     window.location.href = "admin.html";
 
   } catch (erro) {
