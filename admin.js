@@ -291,7 +291,9 @@ cliente.id +
 
   "<strong>Saldo em Aberto:</strong> R$ " +
   totalSaldo.toLocaleString("pt-BR");
-  
+
+  }
+
 async function sair() {
 
   await signOut(auth);
