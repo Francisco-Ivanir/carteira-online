@@ -5,14 +5,18 @@ import {
 
 import {
   getAuth,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-// UTILIZAR A MESMA CONFIGURAÇÃO DO FIREBASE
-// QUE JÁ ESTÁ NO ARQUIVO admin.js
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
-   apiKey: "AIzaSyBy_A8aU9d1Z03RKyedqEkJn6VtYICHjoQ",
+  apiKey: "AIzaSyBy_A8aU9d1Z03RKyedqEkJn6VtYICHjoQ",
   authDomain: "carteira-online-5366a.firebaseapp.com",
   projectId: "carteira-online-5366a",
   storageBucket: "carteira-online-5366a.firebasestorage.app",
@@ -22,6 +26,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+
+const UID_ADMINISTRADOR =
+  "p5VKHfDsmWaowPo3d0be5OVtW8B3";
 
 async function fazerLogin() {
 
@@ -36,15 +44,17 @@ async function fazerLogin() {
     return;
   }
 
+  let usuarioAutenticado;
+
   try {
 
-    await signInWithEmailAndPassword(
+    const resultado = await signInWithEmailAndPassword(
       auth,
       usuario,
       senha
     );
 
-    window.location.href = "admin.html";
+    usuarioAutenticado = resultado.user;
 
   } catch (erro) {
 
@@ -55,20 +65,93 @@ async function fazerLogin() {
       erro.code === "auth/wrong-password" ||
       erro.code === "auth/user-not-found"
     ) {
-
       alert("E-mail ou senha incorretos.");
-
     } else {
-
       alert(
         "Não foi possível entrar.\n\n" +
         erro.message
       );
-
     }
 
+    return;
   }
 
+  // ACESSO DO ADMINISTRADOR
+
+  if (usuarioAutenticado.uid === UID_ADMINISTRADOR) {
+
+    window.location.replace("admin.html");
+    return;
+  }
+
+  // ACESSO DO CLIENTE
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const codigoCliente = params.get("cliente");
+
+  if (!codigoCliente) {
+
+    await signOut(auth);
+
+    alert(
+      "Para acessar sua carteira, abra primeiro o link enviado pelo administrador."
+    );
+
+    return;
+  }
+
+  try {
+
+    const clienteRef = doc(
+      db,
+      "clientes",
+      codigoCliente
+    );
+
+    const clienteSnap = await getDoc(clienteRef);
+
+    if (!clienteSnap.exists()) {
+
+      await signOut(auth);
+
+      alert("Cadastro do cliente não encontrado.");
+      return;
+    }
+
+    const dadosCliente = clienteSnap.data();
+
+    if (
+      dadosCliente.authUid !== usuarioAutenticado.uid
+    ) {
+
+      await signOut(auth);
+
+      alert(
+        "Esta conta não está vinculada a este cadastro."
+      );
+
+      return;
+    }
+
+    window.location.replace(
+      "index.html?cliente=" +
+      encodeURIComponent(codigoCliente)
+    );
+
+  } catch (erro) {
+
+    console.error("Erro ao validar cliente:", erro);
+
+    await signOut(auth);
+
+    alert(
+      "Não foi possível validar seu acesso.\n\n" +
+      erro.message
+    );
+  }
 }
 
 window.fazerLogin = fazerLogin;
