@@ -176,10 +176,10 @@ onAuthStateChanged(auth, async (usuario) => {
     return;
   }
 
-  if (usuario.uid === UID_ADMIN) {
-    window.location.href = "admin.html";
-    return;
-  }
+ if (usuario.uid === UID_ADMIN) {
+  await carregarCarteira(codigoCliente);
+  return;
+}
 
   try {
     const clienteRef = doc(db, "clientes", codigoCliente);
