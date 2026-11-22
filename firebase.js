@@ -1,14 +1,18 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 import {
   getFirestore,
   doc,
   getDoc,
   collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  increment
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -21,292 +25,182 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
+const auth = getAuth(app);
 const db = getFirestore(app);
 
-async function testarFirestore() {
+const UID_ADMIN = "p5VKHfDsmWaowPo3d0be5OVtW8B3";
 
+async function carregarCarteira(codigoCliente) {
   try {
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-const codigoCliente =
-  params.get("cliente") ||
-  "cliente-teste";
-    
-    const docRef = doc(
-  db,
-  "clientes",
-  codigoCliente
-);
-    
+    const docRef = doc(db, "clientes", codigoCliente);
     const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-
-      const dados = docSnap.data();
-
-      const listaEmprestimos =
-  document.getElementById(
-    "listaEmprestimos"
-  );
-
-listaEmprestimos.innerHTML = "";
-
-
-const emprestimosRef =
-  collection(
-    db,
-    "clientes",
-    codigoCliente,
-    "emprestimos"
-  );
-
-const emprestimosSnap =
-  await getDocs(
-    emprestimosRef
-  );
-
-if (!emprestimosSnap.empty) {
-
-  document.getElementById(
-    "modalEmprestimos"
-  ).style.display = "block";
-
-  const emprestimos =
-    emprestimosSnap.docs.map(
-      (doc) => doc.data()
-    );
-
-  function converterData(valor) {
-    if (!valor) return 0;
-
-    const texto = String(valor);
-    const partes = texto.split("/");
-
-    if (partes.length === 3) {
-      return new Date(
-        Number(partes[2]),
-        Number(partes[1]) - 1,
-        Number(partes[0])
-      ).getTime();
+    if (!docSnap.exists()) {
+      alert("Cadastro do cliente não encontrado.");
+      return;
     }
 
-    const dataConvertida =
-      new Date(texto).getTime();
+    const dados = docSnap.data();
 
-    return Number.isNaN(dataConvertida)
-      ? 0
-      : dataConvertida;
-  }
+    // Empréstimos
+    const listaEmprestimos =
+      document.getElementById("listaEmprestimos");
 
-  emprestimos.sort(
-    (a, b) =>
-      converterData(b.data) -
-      converterData(a.data)
-  );
+    listaEmprestimos.innerHTML = "";
 
-  emprestimos.forEach(
-    (item) => {
+    const emprestimosRef = collection(
+      db, "clientes", codigoCliente, "emprestimos"
+    );
 
-      const div =
-        document.createElement(
-          "div"
-        );
+    const emprestimosSnap = await getDocs(emprestimosRef);
 
-      div.style.marginBottom =
-        "15px";
+    if (!emprestimosSnap.empty) {
+      document.getElementById("modalEmprestimos").style.display = "block";
 
-      div.innerHTML =
-        "<strong>" +
-        item.data +
-        "</strong><br>" +
-
-        "R$ " +
-        item.valor.toLocaleString(
-          "pt-BR"
-        ) +
-        "<br>" +
-
-        item.descricao;
-
-      listaEmprestimos.appendChild(
-        div
+      const emprestimos = emprestimosSnap.docs.map(
+        (documento) => documento.data()
       );
 
-    }
-  );
+      function converterData(valor) {
+        if (!valor) return 0;
 
-} else {
+        const partes = String(valor).split("/");
 
-  listaEmprestimos.innerHTML =
-    "Nenhum empréstimo registrado.";
+        if (partes.length === 3) {
+          return new Date(
+            Number(partes[2]),
+            Number(partes[1]) - 1,
+            Number(partes[0])
+          ).getTime();
+        }
 
-}
+        const dataConvertida = new Date(valor).getTime();
 
-      
-     document.getElementById("codigoCliente").innerText =
-  codigoCliente;
-      
-const historico =
-  document.getElementById("historico");
+        return Number.isNaN(dataConvertida) ? 0 : dataConvertida;
+      }
 
-historico.innerHTML = "";
+      emprestimos.sort(
+        (a, b) => converterData(b.data) - converterData(a.data)
+      );
 
-const pagamentosRef = collection(
-  db,
-  "clientes",
-  codigoCliente,
-  "pagamentos"
-);
+      emprestimos.forEach((item) => {
+        const div = document.createElement("div");
+        div.style.marginBottom = "15px";
 
-const pagamentosSnap =
-  await getDocs(pagamentosRef);
+        div.innerHTML =
+          "<strong>" + (item.data || "") + "</strong><br>" +
+          "R$ " + Number(item.valor || 0).toLocaleString("pt-BR") +
+          "<br>" + (item.descricao || "");
 
-pagamentosSnap.forEach((pagamento) => {
-
-  const item = pagamento.data();
-
-  const li =
-    document.createElement("li");
-
-  li.innerText =
-    item.data +
-    " - R$ " +
-    item.valor.toLocaleString("pt-BR") +
-    " (" + item.forma + ")";
-
-  historico.appendChild(li);
-
-});
-    document.getElementById("nome").innerText =
-  dados.nome;
-
-document.getElementById("emprestado").innerText =
-  "R$ " + dados.emprestado.toLocaleString("pt-BR");
-
-document.getElementById("pago").innerText =
-  "R$ " + dados.pago.toLocaleString("pt-BR");
-
-document.getElementById("saldo").innerText =
-  "R$ " + dados.saldo.toLocaleString("pt-BR");
-
-      document.getElementById(
-  "saldoPix"
-).innerText =
-  "R$ " +
-  dados.saldo.toLocaleString(
-    "pt-BR"
-  );
-
-const percentual =
-  (dados.pago / dados.emprestado) * 100;
-
-document.getElementById("percentual").innerText =
-  percentual.toFixed(0);
-
-document.getElementById("barra").style.width =
-  percentual + "%";
+        listaEmprestimos.appendChild(div);
+      });
 
     } else {
-
-      alert("Documento cliente-teste não encontrado.");
-
+      listaEmprestimos.innerHTML = "Nenhum empréstimo registrado.";
     }
 
+    // Código do cliente
+    document.getElementById("codigoCliente").innerText = codigoCliente;
+
+    // Histórico de pagamentos
+    const historico = document.getElementById("historico");
+    historico.innerHTML = "";
+
+    const pagamentosRef = collection(
+      db, "clientes", codigoCliente, "pagamentos"
+    );
+
+    const pagamentosSnap = await getDocs(pagamentosRef);
+
+    pagamentosSnap.forEach((pagamento) => {
+      const item = pagamento.data();
+      const li = document.createElement("li");
+
+      li.innerText =
+        (item.data || "") +
+        " - R$ " +
+        Number(item.valor || 0).toLocaleString("pt-BR") +
+        " (" + (item.forma || "Não informado") + ")";
+
+      historico.appendChild(li);
+    });
+
+    // Dados principais
+    const emprestado = Number(dados.emprestado || 0);
+    const pago = Number(dados.pago || 0);
+    const saldo = Number(dados.saldo || 0);
+
+    document.getElementById("nome").innerText = dados.nome || "";
+    document.getElementById("emprestado").innerText =
+      "R$ " + emprestado.toLocaleString("pt-BR");
+
+    document.getElementById("pago").innerText =
+      "R$ " + pago.toLocaleString("pt-BR");
+
+    document.getElementById("saldo").innerText =
+      "R$ " + saldo.toLocaleString("pt-BR");
+
+    document.getElementById("saldoPix").innerText =
+      "R$ " + saldo.toLocaleString("pt-BR");
+
+    const percentual = emprestado > 0
+      ? (pago / emprestado) * 100
+      : 0;
+
+    document.getElementById("percentual").innerText =
+      percentual.toFixed(0);
+
+    document.getElementById("barra").style.width =
+      percentual + "%";
+
   } catch (erro) {
-
-    alert(
-  "ERRO:\n\n" +
-  erro.message
-);
-
-console.error(erro);
-
+    console.error("Erro ao carregar carteira:", erro);
+    alert("Não foi possível carregar sua carteira.\n\n" + erro.message);
   }
-async function registrarPagamentoFirebase() {
+}
+
+// Primeiro verifica a autenticação.
+// Só depois permite consultar os dados do cliente.
+onAuthStateChanged(auth, async (usuario) => {
+  const params = new URLSearchParams(window.location.search);
+  const codigoCliente = params.get("cliente");
+
+  if (!codigoCliente) {
+    alert("Link da carteira inválido. O código do cliente não foi informado.");
+    return;
+  }
+
+  if (!usuario) {
+    window.location.href =
+      "login.html?cliente=" + encodeURIComponent(codigoCliente);
+    return;
+  }
+
+  if (usuario.uid === UID_ADMIN) {
+    window.location.href = "admin.html";
+    return;
+  }
 
   try {
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
+    const clienteRef = doc(db, "clientes", codigoCliente);
+    const clienteSnap = await getDoc(clienteRef);
 
-const codigoCliente =
-  params.get("cliente") ||
-  "cliente-teste";
-    
-    const valorTexto =
-      prompt("Valor recebido:");
+    if (
+      !clienteSnap.exists() ||
+      clienteSnap.data().authUid !== usuario.uid
+    ) {
+      await signOut(auth);
 
-    if (!valorTexto) return;
+      window.location.href =
+        "login.html?cliente=" + encodeURIComponent(codigoCliente);
 
-    const valor =
-      Number(valorTexto.replace(",", "."));
-
-    if (isNaN(valor)) return;
-
-    let forma =
-      prompt("Forma de pagamento (PIX ou Dinheiro)");
-
-    if (!forma) {
-      forma = "Não informado";
+      return;
     }
 
-    const hoje =
-      new Date().toLocaleDateString("pt-BR");
-
-    await addDoc(
-
-  collection(
-    db,
-    "clientes",
-    codigoCliente,
-    "pagamentos"
-  ),
-
-      {
-        data: hoje,
-        valor: valor,
-        forma: forma
-      }
-
-    );
-
-    const clienteRef = doc(
-  db,
-  "clientes",
-  codigoCliente
-);
-
-    await updateDoc(
-      clienteRef,
-      {
-        pago: increment(valor),
-        saldo: increment(-valor)
-      }
-    );
-
-    alert(
-      "Pagamento registrado com sucesso!"
-    );
-
-    location.reload();
+    await carregarCarteira(codigoCliente);
 
   } catch (erro) {
-
-    alert(
-      "Erro ao salvar pagamento:\n\n" +
-      erro.message
-    );
-
+    console.error("Erro ao verificar acesso:", erro);
+    alert("Não foi possível verificar seu acesso.\n\n" + erro.message);
   }
-
-}
-  window.registrarPagamentoFirebase =
-  registrarPagamentoFirebase;
-}
-
-testarFirestore();
+});
