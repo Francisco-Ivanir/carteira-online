@@ -77,6 +77,14 @@ async function criarCliente() {
     const contadorRef =
       doc(db, "configuracao", "contadorClientes");
 
+    const dataEmprestimoInicial =
+  new Date().toLocaleDateString("pt-BR");
+
+const criadoEmInicial = new Date();
+
+const idEmprestimoInicial =
+  doc(collection(db, "clientes")).id;
+    
     const numeroCriado = await runTransaction(
       db,
       async (transacao) => {
