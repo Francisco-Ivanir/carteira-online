@@ -275,9 +275,9 @@ formatarMoeda(dados.saldo) +
 link +
 "','_blank')\">Abrir</button> " +
 
-"<button onclick=\"navigator.clipboard.writeText('" +
+" <button onclick=\"navigator.clipboard.writeText('" +
 link +
-"')\">Copiar Link</button>" +
+"').then(() => alert('Link copiado com sucesso.')).catch(() => alert('Não foi possível copiar o link.'))\">Copiar Link</button>" +
   
 " <button onclick=\"registrarEmprestimoAdmin('" +
 cliente.id +
