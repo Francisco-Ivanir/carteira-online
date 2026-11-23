@@ -130,6 +130,27 @@ const idEmprestimoInicial =
           saldo: emprestado
         });
 
+        if (emprestado > 0) {
+
+  const emprestimoInicialRef = doc(
+    db,
+    "clientes",
+    codigo,
+    "emprestimos",
+    idEmprestimoInicial
+  );
+
+  transacao.set(emprestimoInicialRef, {
+
+    data: dataEmprestimoInicial,
+    criadoEm: criadoEmInicial,
+    valor: emprestado,
+    descricao: "Empréstimo inicial"
+
+  });
+
+}
+        
         transacao.set(contadorRef, {
           ultimoNumero: proximoNumero
         });
