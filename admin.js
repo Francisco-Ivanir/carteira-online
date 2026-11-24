@@ -64,6 +64,9 @@ async function criarCliente() {
         document.getElementById("emprestado").value
       );
 
+    const descricaoEmprestimo =
+  document.getElementById("descricaoEmprestimo").value.trim();
+    
     if (!nome) {
       alert("Informe o nome.");
       return;
