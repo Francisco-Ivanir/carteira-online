@@ -148,7 +148,7 @@ const idEmprestimoInicial =
     data: dataEmprestimoInicial,
     criadoEm: criadoEmInicial,
     valor: emprestado,
-    descricao: "Empréstimo inicial"
+   descricao: descricaoEmprestimo || "Empréstimo inicial"
 
   });
 
