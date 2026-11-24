@@ -581,97 +581,111 @@ alert(
 window.registrarPagamentoAdmin =
   registrarPagamentoAdmin;
 
+
 async function registrarEmprestimoAdmin(
-codigoCliente
+  codigoCliente
 ) {
 
-try {
+  try {
 
-const valorTexto =
-  prompt("Valor do empréstimo:");
+    const valorTexto =
+      prompt("Valor do empréstimo:");
 
-if (!valorTexto) return;
+    if (valorTexto === null || !valorTexto.trim()) {
+      return;
+    }
 
-const valor =
-  Number(
-    valorTexto.replace(",", ".")
-  );
+    const valor =
+      Number(valorTexto.replace(",", "."));
 
-if (isNaN(valor)) return;
+    if (!Number.isFinite(valor) || valor <= 0) {
+      alert("Informe um valor válido, maior que zero.");
+      return;
+    }
 
-const descricao =
-  prompt("Descrição do empréstimo:");
+    const descricaoTexto =
+      prompt("Descrição do empréstimo:");
 
-if (!descricao) return;
+    if (descricaoTexto === null || !descricaoTexto.trim()) {
+      return;
+    }
 
+    const descricao = descricaoTexto.trim();
 
-await addDoc(
-  collection(
-    db,
-    "clientes",
-    codigoCliente,
-    "emprestimos"
-  ),
-  {
-    data:
-      new Date()
-      .toLocaleDateString("pt-BR"),
-     criadoEm: new Date(),
-    valor: Number(valor),
-    descricao: descricao
+    const clienteRef =
+      doc(db, "clientes", codigoCliente);
+
+    const emprestimoRef =
+      doc(
+        collection(
+          db,
+          "clientes",
+          codigoCliente,
+          "emprestimos"
+        )
+      );
+
+    const agora = new Date();
+
+    const dataEmprestimo =
+      agora.toLocaleDateString("pt-BR");
+
+    await runTransaction(
+      db,
+      async (transacao) => {
+
+        const clienteSnap =
+          await transacao.get(clienteRef);
+
+        if (!clienteSnap.exists()) {
+          throw new Error("Cliente não encontrado.");
+        }
+
+        const dadosCliente =
+          clienteSnap.data();
+
+        const novoEmprestado =
+          (dadosCliente.emprestado || 0) + valor;
+
+        const novoSaldo =
+          (dadosCliente.saldo || 0) + valor;
+
+        transacao.set(emprestimoRef, {
+          data: dataEmprestimo,
+          criadoEm: agora,
+          valor: valor,
+          descricao: descricao
+        });
+
+        transacao.update(clienteRef, {
+          emprestado: novoEmprestado,
+          saldo: novoSaldo
+        });
+
+      }
+    );
+
+    alert(
+      "Empréstimo registrado com sucesso!"
+    );
+
+    alert(
+      "Cliente: " +
+      codigoCliente +
+      "\nValor: R$ " +
+      valor +
+      "\nDescrição: " +
+      descricao
+    );
+
+  } catch (erro) {
+
+    alert(
+      "Erro:\n" +
+      erro.message
+    );
+
   }
-);
-
-  const clienteRef =
-  doc(
-    db,
-    "clientes",
-    codigoCliente
-  );
-
-const clienteSnap =
-  await getDoc(clienteRef);
-
-const dadosCliente =
-  clienteSnap.data();
-
-const novoEmprestado =
-  (dadosCliente.emprestado || 0)
-  + Number(valor);
-
-const novoSaldo =
-  (dadosCliente.saldo || 0)
-  + Number(valor);
-
-await updateDoc(
-  clienteRef,
-  {
-    emprestado: novoEmprestado,
-    saldo: novoSaldo
-  }
-);
-
-alert(
-  "Empréstimo registrado com sucesso!"
-);
-  
-alert(
-  "Cliente: " +
-  codigoCliente +
-  "\nValor: R$ " +
-  valor +
-  "\nDescrição: " +
-  descricao
-);
-
-} catch (erro) {
-
-alert(
-  "Erro:\n" +
-  erro.message
-);
-
-}
 
 }
 
