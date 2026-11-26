@@ -169,6 +169,112 @@ async function carregarCarteira(codigoCliente) {
   }
 }
 
+async function editarEmprestimoAdmin(
+  codigoCliente,
+  idEmprestimo,
+  valorAtual,
+  descricaoAtual
+) {
+  if (!auth.currentUser || auth.currentUser.uid !== UID_ADMIN) {
+    alert("Apenas o administrador pode editar empréstimos.");
+    return;
+  }
+
+  const valorDigitado = prompt(
+    "Informe o novo valor do empréstimo:",
+    Number(valorAtual).toFixed(2).replace(".", ",")
+  );
+
+  if (valorDigitado === null || valorDigitado.trim() === "") {
+    return;
+  }
+
+  const novoValor = Number(
+    valorDigitado.replace(/\./g, "").replace(",", ".")
+  );
+
+  if (!Number.isFinite(novoValor) || novoValor <= 0) {
+    alert("Informe um valor válido e maior que zero.");
+    return;
+  }
+
+  const novaDescricao = prompt(
+    "Informe a nova descrição:",
+    descricaoAtual
+  );
+
+  if (novaDescricao === null) {
+    return;
+  }
+
+  if (!novaDescricao.trim()) {
+    alert("A descrição não pode ficar vazia.");
+    return;
+  }
+
+  const clienteRef = doc(db, "clientes", codigoCliente);
+
+  const emprestimoRef = doc(
+    db,
+    "clientes",
+    codigoCliente,
+    "emprestimos",
+    idEmprestimo
+  );
+
+  try {
+    await runTransaction(db, async (transacao) => {
+      const clienteSnap = await transacao.get(clienteRef);
+      const emprestimoSnap = await transacao.get(emprestimoRef);
+
+      if (!clienteSnap.exists() || !emprestimoSnap.exists()) {
+        throw new Error("Cliente ou empréstimo não encontrado.");
+      }
+
+      const dadosCliente = clienteSnap.data();
+      const dadosEmprestimo = emprestimoSnap.data();
+
+      const valorAntigo = Number(dadosEmprestimo.valor || 0);
+
+      const diferenca = Math.round(
+        (novoValor - valorAntigo) * 100
+      ) / 100;
+
+      const novoEmprestado = Math.round(
+        (Number(dadosCliente.emprestado || 0) + diferenca) * 100
+      ) / 100;
+
+      const novoSaldo = Math.round(
+        (Number(dadosCliente.saldo || 0) + diferenca) * 100
+      ) / 100;
+
+      if (novoSaldo < -0.001 || novoEmprestado < 0) {
+        throw new Error(
+          "O novo valor não pode deixar o saldo devedor negativo."
+        );
+      }
+
+      transacao.update(emprestimoRef, {
+        valor: Math.round(novoValor * 100) / 100,
+        descricao: novaDescricao.trim()
+      });
+
+      transacao.update(clienteRef, {
+        emprestado: novoEmprestado,
+        saldo: novoSaldo
+      });
+    });
+
+    alert("Empréstimo atualizado com sucesso!");
+
+    await carregarCarteira(codigoCliente);
+
+  } catch (erro) {
+    console.error("Erro ao editar empréstimo:", erro);
+    alert("Não foi possível editar o empréstimo.\n\n" + erro.message);
+  }
+}
+
 // Primeiro verifica a autenticação.
 // Só depois permite consultar os dados do cliente.
 onAuthStateChanged(auth, async (usuario) => {
