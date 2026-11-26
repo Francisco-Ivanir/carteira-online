@@ -88,17 +88,21 @@ async function carregarCarteira(codigoCliente) {
     converterData(a.dados.data)
 );
 
-      emprestimos.forEach((item) => {
-        const div = document.createElement("div");
-        div.style.marginBottom = "15px";
+      emprestimos.forEach((registro) => {
 
-        div.innerHTML =
-          "<strong>" + (item.data || "") + "</strong><br>" +
-          "R$ " + Number(item.valor || 0).toLocaleString("pt-BR") +
-          "<br>" + (item.descricao || "");
+  const item = registro.dados;
 
-        listaEmprestimos.appendChild(div);
-      });
+  const div = document.createElement("div");
+  div.style.marginBottom = "15px";
+
+  div.innerHTML =
+    "<strong>" + (item.data || "") + "</strong><br>" +
+    "R$ " + Number(item.valor || 0).toLocaleString("pt-BR") +
+    "<br>" + (item.descricao || "");
+
+  listaEmprestimos.appendChild(div);
+
+});
 
     } else {
       listaEmprestimos.innerHTML = "Nenhum empréstimo registrado.";
