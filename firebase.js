@@ -89,17 +89,54 @@ async function carregarCarteira(codigoCliente) {
     converterData(a.dados.data)
 );
 
-      emprestimos.forEach((registro) => {
+     emprestimos.forEach((registro) => {
 
   const item = registro.dados;
 
   const div = document.createElement("div");
   div.style.marginBottom = "15px";
 
-  div.innerHTML =
-    "<strong>" + (item.data || "") + "</strong><br>" +
-    "R$ " + Number(item.valor || 0).toLocaleString("pt-BR") +
-    "<br>" + (item.descricao || "");
+  const data = document.createElement("strong");
+  data.textContent = item.data || "";
+  div.appendChild(data);
+
+  div.appendChild(document.createElement("br"));
+
+  div.appendChild(
+    document.createTextNode(
+      "R$ " + Number(item.valor || 0).toLocaleString("pt-BR")
+    )
+  );
+
+  div.appendChild(document.createElement("br"));
+
+  div.appendChild(
+    document.createTextNode(item.descricao || "")
+  );
+
+  // Botão disponível somente para o administrador
+  if (
+    auth.currentUser &&
+    auth.currentUser.uid === UID_ADMIN
+  ) {
+    const botaoEditar = document.createElement("button");
+
+    botaoEditar.type = "button";
+    botaoEditar.textContent = "Editar";
+    botaoEditar.style.marginTop = "8px";
+
+    botaoEditar.addEventListener("click", () => {
+      editarEmprestimoAdmin(
+        codigoCliente,
+        registro.id,
+        Number(item.valor || 0),
+        item.descricao || ""
+      );
+    });
+
+    div.appendChild(document.createElement("br"));
+    div.appendChild(botaoEditar);
+  }
 
   listaEmprestimos.appendChild(div);
 
