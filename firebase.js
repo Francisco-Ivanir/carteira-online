@@ -82,9 +82,11 @@ async function carregarCarteira(codigoCliente) {
         return Number.isNaN(dataConvertida) ? 0 : dataConvertida;
       }
 
-      emprestimos.sort(
-        (a, b) => converterData(b.data) - converterData(a.data)
-      );
+    emprestimos.sort(
+  (a, b) =>
+    converterData(b.dados.data) -
+    converterData(a.dados.data)
+);
 
       emprestimos.forEach((item) => {
         const div = document.createElement("div");
