@@ -58,8 +58,11 @@ async function carregarCarteira(codigoCliente) {
       document.getElementById("modalEmprestimos").style.display = "block";
 
       const emprestimos = emprestimosSnap.docs.map(
-        (documento) => documento.data()
-      );
+  (documento) => ({
+    id: documento.id,
+    dados: documento.data()
+  })
+);
 
       function converterData(valor) {
         if (!valor) return 0;
